@@ -15,7 +15,7 @@ body {
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 80%;
-    max-width: 400px;
+    max-width: 600px;
 }
 
 h1 {
@@ -23,35 +23,26 @@ h1 {
     color: #333;
 }
 
-#palavra {
-    font-size: 24px;
-    margin-bottom: 20px;
+#dados {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
 }
 
-#tentativas {
+div > div {
+    text-align: center;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
     margin-bottom: 10px;
-}
-
-#letras-utilizadas {
-    margin-bottom: 10px;
-}
-
-#entrada {
-    margin-bottom: 20px;
-}
-
-label {
-    display: block;
-    margin-bottom: 5px;
-}
-
-input {
-    padding: 5px;
-    font-size: 16px;
 }
 
 button {
-    padding: 5px 10px;
+    padding: 8px 16px;
     background-color: #007bff;
     color: #fff;
     border: none;
@@ -62,7 +53,6 @@ button:hover {
     background-color: #0056b3;
 }
 
-#mensagem {
-    font-weight: bold;
-    color: #d9534f;
+p {
+    font-size: 18px;
 }

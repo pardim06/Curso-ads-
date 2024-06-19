@@ -3,21 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jogo da Forca moises</title>
+    <title>Simulador de Dados</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Jogo da Forca</h1>
-        <div id="palavra"></div>
-        <div id="tentativas">Tentativas restantes: <span id="numTentativas"></span></div>
-        <div id="letras-utilizadas">Letras utilizadas: <span id="letrasUsadas"></span></div>
-        <div id="entrada">
-            <label for="letra">Digite uma letra:</label>
-            <input type="text" id="letra" maxlength="1">
-            <button onclick="checarLetra()">Verificar</button>
+        <h1>Simulador de Dados</h1>
+        <div id="dados">
+            <div>
+                <h2>D6</h2>
+                <p id="resultadoD6">Resultado: </p>
+                <button onclick="girarD6()">Girar D6</button>
+            </div>
+            <div>
+                <h2>D8</h2>
+                <p id="resultadoD8">Resultado: </p>
+                <button onclick="girarD8()">Girar D8</button>
+            </div>
+            <div>
+                <h2>D20</h2>
+                <p id="resultadoD20">Resultado: </p>
+                <button onclick="girarD20()">Girar D20</button>
+            </div>
         </div>
-        <div id="mensagem"></div>
     </div>
 
     <script src="script.js"></script>
