@@ -1,0 +1,39 @@
+unction verificarIdadeELogin() {
+    var nome = prompt("Digite seu nome:");
+    var anoNascimento = prompt("Digite seu ano de nascimento:");
+
+ 
+    var anoAtual = new Date().getFullYear();
+
+ 
+    var idade = anoAtual - anoNascimento;
+
+    if (idade >= 18) {
+        
+        alert("Bem-vindo, " + nome + "! Você é maior de idade.");
+
+        var usuario = prompt("Digite um nome de usuário:");
+        var senha = prompt("Digite uma senha:");
+
+        
+        var dadosUsuario = {
+            nome: nome,
+            idade: idade,
+            usuario: usuario,
+            senha: senha
+        };
+
+        
+      
+        var listaUsuarios = [];
+        listaUsuarios.push(dadosUsuario);
+
+        console.log("Dados do usuário salvos:", listaUsuarios);
+    } else {
+        
+        alert("Desculpe, " + nome + ". Você é menor de idade e não pode realizar o login.");
+    }
+}
+
+
+verificarIdadeELogin();
