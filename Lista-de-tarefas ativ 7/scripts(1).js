@@ -4,7 +4,7 @@ const listaCompleta = document.querySelector('.list-tasks');
 
 let minhaListaDeItens = [];
 
-// Função para adicionar uma nova tarefa à lista
+
 function adicionarNovaTarefa() {
   const novaTarefa = {
     tarefa: input.value,
