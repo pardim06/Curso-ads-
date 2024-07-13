@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empréstimos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Centro de Empréstimos</h1>
+
+    <div>
+        <h2>Adicionar Dispositivo</h2>
+        <label for="modelo">Modelo:</label>
+        <input type="text" id="modelo">
+        <label for="categoria">Categoria:</label>
+        <input type="text" id="categoria">
+        <label for="serial">Serial:</label>
+        <input type="text" id="serial">
+        <button onclick="adicionarDispositivo()">Adicionar</button>
+    </div>
+
+    <div>
+        <h2>Emprestar/Devolver Dispositivo</h2>
+        <label for="serialAcao">Serial:</label>
+        <input type="text" id="serialAcao">
+        <button onclick="emprestarDispositivo()">Emprestar</button>
+        <button onclick="devolverDispositivo()">Devolver</button>
+    </div>
+
+    <h2>Inventário</h2>
+    <ul id="inventario"></ul>
+
+    <script src="script.js"></script>
+
+    <style>
+    label{
+        color: white;
+    }
+    </style>
+</body>
+</html>
+
+
