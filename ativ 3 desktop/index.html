@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campo Minado Personalizado</title>
+    <style>
+        #tabuleiro {
+            display: grid;
+            gap: 5px;
+        }
+        .celula {
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            text-align: center;
+            line-height: 50px;
+            border: 1px solid black;
+            cursor: pointer;
+        }
+        .revelado {
+            background-color: lightgray;
+            cursor: default;
+        }
+    </style>
+</head>
+<body>
+    <h1>Campo Minado Personalizado</h1>
+    <label for="tamanho">Escolha o tamanho do tabuleiro:</label>
+    <input type="number" id="tamanho" min="2" max="10" value="6">
+    <button id="iniciar">Iniciar Jogo</button>
+    <div id="tabuleiro"></div>
+    <p id="mensagem"></p>
+
+    <script>
+        const tabuleiro = document.getElementById("tabuleiro");
+        const mensagem = document.getElementById("mensagem");
+        const tamanhoInput = document.getElementById("tamanho");
+        const iniciarBtn = document.getElementById("iniciar");
+
+        let tamanhoTabuleiro = 6;
+        let minas = [];
+
+        // Função para gerar o tabuleiro com minas aleatórias
+        function gerarMinas(tamanho) {
+            const totalCelulas = tamanho * tamanho;
+            return Array.from({ length: totalCelulas }, () => Math.random() < 0.3 ? "*" : "");
+        }
+
+        // Função para criar o tabuleiro
+        function criarTabuleiro(tamanho) {
+            // Limpa tabuleiro e mensagem
+            tabuleiro.innerHTML = "";
+            mensagem.textContent = "";
+
+            // Define o grid do tabuleiro
+            tabuleiro.style.gridTemplateColumns = `repeat(${tamanho}, 50px)`;
+            tabuleiro.style.gridTemplateRows = `repeat(${tamanho}, 50px)`;
+
+            // Cria as células
+            minas.forEach((valor, index) => {
+                const celula = document.createElement("div");
+                celula.classList.add("celula");
+                celula.dataset.index = index;
+                celula.addEventListener("click", revelarCelula);
+                tabuleiro.appendChild(celula);
+            });
+        }
+
+        // Função para revelar o conteúdo de uma célula
+        function revelarCelula(event) {
+            const celula = event.target;
+            const index = celula.dataset.index;
+
+            // Impede de clicar novamente em uma célula já revelada
+            if (celula.classList.contains("revelado")) return;
+
+            // Revela o conteúdo da célula
+            celula.textContent = minas[index];
+            celula.classList.add("revelado");
+
+            if (minas[index] === "*") {
+                mensagem.textContent = "Você encontrou uma mina! Fim de jogo!";
+                // Desabilita todas as células após encontrar uma mina
+                Array.from(document.getElementsByClassName("celula")).forEach(cel => cel.removeEventListener("click", revelarCelula));
+            } else if (document.querySelectorAll(".celula:not(.revelado)").length === document.querySelectorAll(".celula[data-index='']:not(.revelado)").length) {
+                mensagem.textContent = "Parabéns! Você venceu!";
+            }
+        }
+
+        // Função para iniciar o jogo
+        function iniciarJogo() {
+            tamanhoTabuleiro = parseInt(tamanhoInput.value);
+            minas = gerarMinas(tamanhoTabuleiro);
+            criarTabuleiro(tamanhoTabuleiro);
+        }
+
+        // Adiciona evento ao botão de iniciar
+        iniciarBtn.addEventListener("click", iniciarJogo);
+
+        // Inicializa o jogo com o tamanho padrão
+        iniciarJogo();
+    </script>
+</body>
+</html>
