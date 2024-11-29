@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle com Teclado em Tabuleiro 6x6</title>
+    <style>
+        #tabuleiro {
+            display: grid;
+            grid-template-columns: repeat(6, 50px);
+            grid-template-rows: repeat(6, 50px);
+            gap: 5px;
+        }
+        .celula {
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            text-align: center;
+            line-height: 50px;
+            border: 1px solid black;
+        }
+        .vitoria {
+            background-color: lightgreen;
+        }
+        .derrota {
+            background-color: lightcoral;
+        }
+    </style>
+</head>
+<body>
+    <h1>Controle o Caractere * com as Setas</h1>
+    <div id="tabuleiro"></div>
+    <p id="mensagem"></p>
+
+    <script>
+        const tabuleiro = document.getElementById("tabuleiro");
+        const mensagem = document.getElementById("mensagem");
+        const tamanhoTabuleiro = 6;
+        let posicaoJogador = { x: 0, y: 0 }; 
+        let posicaoVitoria = { x: 0, y: 0 };
+        let posicaoDerrota = { x: 0, y: 0 };
+
+        function gerarPosicaoAleatoria() {
+            return {
+                x: Math.floor(Math.random() * tamanhoTabuleiro),
+                y: Math.floor(Math.random() * tamanhoTabuleiro),
+            };
+        }
+
+      
+        function inicializarObjetivos() {
+            do {
+                posicaoVitoria = gerarPosicaoAleatoria();
+                posicaoDerrota = gerarPosicaoAleatoria();
+            } while (posicaoVitoria.x === posicaoDerrota.x && posicaoVitoria.y === posicaoDerrota.y);
+
+            
+            const vitoriaCelula = document.querySelector(`.celula[data-x='${posicaoVitoria.x}'][data-y='${posicaoVitoria.y}']`);
+            const derrotaCelula = document.querySelector(`.celula[data-x='${posicaoDerrota.x}'][data-y='${posicaoDerrota.y}']`);
+            vitoriaCelula.classList.add("vitoria");
+            derrotaCelula.classList.add("derrota");
+        }
+
+      
+        function criarTabuleiro() {
+            for (let i = 0; i < tamanhoTabuleiro; i++) {
+                for (let j = 0; j < tamanhoTabuleiro; j++) {
+                    const celula = document.createElement("div");
+                    celula.classList.add("celula");
+                    celula.dataset.x = i;
+                    celula.dataset.y = j;
+                    tabuleiro.appendChild(celula);
+                }
+            }
+            atualizarTabuleiro();
+        }
+
+        function atualizarTabuleiro() {
+           
+            document.querySelectorAll(".celula").forEach(celula => celula.textContent = "");
+            
+            const jogador = document.querySelector(`.celula[data-x='${posicaoJogador.x}'][data-y='${posicaoJogador.y}']`);
+            jogador.textContent = "*";
+
+            
+            if (posicaoJogador.x === posicaoVitoria.x && posicaoJogador.y === posicaoVitoria.y) {
+                mensagem.textContent = "Parabéns! Você venceu!";
+                document.removeEventListener("keydown", moverJogador);
+            } else if (posicaoJogador.x === posicaoDerrota.x && posicaoJogador.y === posicaoDerrota.y) {
+                mensagem.textContent = "Você perdeu! Fim de jogo.";
+                document.removeEventListener("keydown", moverJogador);
+            }
+        }
+
+        
+        function moverJogador(event) {
+            switch (event.key) {
+                case "ArrowUp":
+                    if (posicaoJogador.x > 0) posicaoJogador.x--;
+                    break;
+                case "ArrowDown":
+                    if (posicaoJogador.x < tamanhoTabuleiro - 1) posicaoJogador.x++;
+                    break;
+                case "ArrowLeft":
+                    if (posicaoJogador.y > 0) posicaoJogador.y--;
+                    break;
+                case "ArrowRight":
+                    if (posicaoJogador.y < tamanhoTabuleiro - 1) posicaoJogador.y++;
+                    break;
+                default:
+                    return;
+            }
+            atualizarTabuleiro();
+        }
+
+        
+        criarTabuleiro();
+        inicializarObjetivos();
+
+        
+        document.addEventListener("keydown", moverJogador);
+    </script>
+</body>
+</html>
