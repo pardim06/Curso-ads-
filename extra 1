@@ -1,0 +1,55 @@
+
+class Product {
+    constructor(name, price, barcode) {
+        this.name = name;
+        this.price = price;
+        this.barcode = barcode;
+    }
+
+    /
+    validateBarcode() {
+        const barcodeRegex = /^\d{12}$/; // Regex que valida 12 dígitos numéricos
+        return barcodeRegex.test(this.barcode); // Verifique se o barcode corresponde ao regex
+    }
+
+  
+    applyDiscount() {
+        if (this.validateBarcode()) {
+            this.price = this.price * 0.9; // Aplicar desconto de 10% ao preço
+        }
+    }
+
+    async isProductInStock() {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                if (this.name === "Phone") {
+                    resolve(true); // Produto está em estoque
+                } else {
+                    resolve(false); // Produto não está em estoque
+                }
+            }, 2000); // Simulação de tempo de resposta de 2 segundos
+        });
+    }
+
+  
+    async checkProductStatus() {
+        if (!this.validateBarcode()) {
+            return "Código de barras inválido."; // Retornar mensagem de código de barras inválido
+        }
+
+        this.applyDiscount(); // Aplicar desconto se o código de barras for válido
+
+        const inStock = await this.isProductInStock();
+        return inStock ? "Produto em estoque." : "Produto fora de estoque.";
+    }
+}
+
+
+async function main() {
+    const product = new Product("Phone", 1000, "123456789012"); // Defina um nome, preço e código de barras
+    console.log("Verificando o produto...");
+    const result = await product.checkProductStatus();
+    console.log(result);
+}
+
+main();
